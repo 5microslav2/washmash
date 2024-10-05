@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Washing Machine Simulation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            background-color: #68a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #918838;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        .log {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+    <script>
+        function fetchLog() {
+            fetch('/output_log')
+                .then(response => response.json())
+                .then(data => {
+                    const logContainer = document.getElementById('output_log');
+                    logContainer.innerHTML = '';
+                    data.forEach(step => {
+                        const li = document.createElement('li');
+                        li.textContent = step;
+                        logContainer.appendChild(li);
+                    });
+                });
+        }
+
+
+        setInterval(fetchLog, 2000);
+    </script>
+</head>
+<body>
+    <h1>Симуляція пральної машинки</h1>
+    <form method="POST">
+        <button type="submit">Початок роботи пральної машинки</button>
+    </form>
+
+    <h2>Log:</h2>
+    <ul id="output_log">
+        <li>No logs available.</li>
+    </ul>
+</body>
+</html>
